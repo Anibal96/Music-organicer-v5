@@ -17,7 +17,8 @@ public class MusicOrganizer
     private TrackReader reader;
     //Atributo que guarda si la cancion se reproduce entera.
     private boolean cancionCompleta;
-
+    //Atributo que guarda si una cancion se esta reproduciendo.
+    private boolean cancionReproduc;
     /**
      * Create a MusicOrganizer
      */
@@ -27,6 +28,7 @@ public class MusicOrganizer
         player = new MusicPlayer();
         reader = new TrackReader();
         cancionCompleta = false;
+        cancionReproduc = false;
         readLibrary("audio");
         System.out.println("Music library loaded. " + getNumberOfTracks() + " tracks.");
         System.out.println();
@@ -59,10 +61,16 @@ public class MusicOrganizer
         if(indexValid(index)) {
             cancionCompleta = cancionCompleta1;
             isPlaying();
-            Track track = tracks.get(index);
-            player.startPlaying(track.getFilename());
-            System.out.println("Now playing: " + track.getArtist() + " - " + track.getTitle());
-            track.playCountUpgrade();
+            if(!cancionReproduc){
+                Track track = tracks.get(index);
+                player.startPlaying(track.getFilename());
+                System.out.println("Now playing: " + track.getArtist() + " - " + track.getTitle());
+                track.playCountUpgrade();
+                cancionReproduc = true;
+            }
+            else{
+                System.out.println("La cancion se esta reproducciendo.");
+            }
         }
     }
     
@@ -141,13 +149,9 @@ public class MusicOrganizer
      */
     public void stopPlaying()
     {
-        if(cancionCompleta){
-            System.out.println("La cancion no se puede parar");
-        }
-        else{
             player.stop();
+            cancionReproduc = false;
             tracks.get(0).stopCountUpgrade();
-        }
     }
 
     /**
