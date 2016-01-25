@@ -170,4 +170,16 @@ public class MusicOrganizer
             addTrack(track);
         }
     }
+    
+    /**
+     * Método que devuelve el trak de las canciones que coincidan con la busqueda.
+     */
+    public void findInTitle (String file)
+    {
+        for(Track track : tracks) {
+            if(track.getTitle().contains(file)) {
+                System.out.println(track.getDetails());
+            }
+        }
+    }
 }
