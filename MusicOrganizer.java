@@ -15,6 +15,8 @@ public class MusicOrganizer
     private MusicPlayer player;
     // A reader that can read music files and load them as tracks.
     private TrackReader reader;
+    //Atributo que guarda si la cancion se reproduce entera.
+    private boolean cancionCompleta;
 
     /**
      * Create a MusicOrganizer
@@ -24,6 +26,7 @@ public class MusicOrganizer
         tracks = new ArrayList<Track>();
         player = new MusicPlayer();
         reader = new TrackReader();
+        cancionCompleta = false;
         readLibrary("audio");
         System.out.println("Music library loaded. " + getNumberOfTracks() + " tracks.");
         System.out.println();
@@ -51,9 +54,11 @@ public class MusicOrganizer
      * Play a track in the collection.
      * @param index The index of the track to be played.
      */
-    public void playTrack(int index)
+    public void playTrack(int index, boolean cancionCompleta1)
     {
         if(indexValid(index)) {
+            cancionCompleta = cancionCompleta1;
+            isPlaying();
             Track track = tracks.get(index);
             player.startPlaying(track.getFilename());
             System.out.println("Now playing: " + track.getArtist() + " - " + track.getTitle());
@@ -121,9 +126,11 @@ public class MusicOrganizer
     /**
      * Play the first track in the collection, if there is one.
      */
-    public void playFirst()
+    public void playFirst(boolean cancionCompleta1)
     {
+        cancionCompleta = cancionCompleta1;
         if(tracks.size() > 0) {
+            isPlaying();
             player.startPlaying(tracks.get(0).getFilename());
             tracks.get(0).playCountUpgrade();
         }
@@ -134,8 +141,13 @@ public class MusicOrganizer
      */
     public void stopPlaying()
     {
-        player.stop();
-        tracks.get(0).stopCountUpgrade();
+        if(cancionCompleta){
+            System.out.println("La cancion no se puede parar");
+        }
+        else{
+            player.stop();
+            tracks.get(0).stopCountUpgrade();
+        }
     }
 
     /**
@@ -183,6 +195,19 @@ public class MusicOrganizer
             if(track.getTitle().contains(file)) {
                 System.out.println(track.getDetails());
             }
+        }
+    }
+    
+    /**
+     * Método que muestra por pantalla si la cancion se esta reproduciendo completa.
+     */
+    public void isPlaying ()
+    {
+        if (cancionCompleta){
+            System.out.println("La cancion se esta reproducciendo entera");
+        }
+        else{
+            System.out.println("La cancion se puede parar");
         }
     }
 }
