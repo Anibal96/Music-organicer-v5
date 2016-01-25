@@ -135,6 +135,7 @@ public class MusicOrganizer
     public void stopPlaying()
     {
         player.stop();
+        tracks.get(0).stopCountUpgrade();
     }
 
     /**

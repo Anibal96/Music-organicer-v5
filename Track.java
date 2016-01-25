@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 /**
  * Store the details of a music track,
  * such as the artist, title, and file name.
@@ -15,6 +16,8 @@ public class Track
     private String filename;
     // Atributo que almacena el numero de veces que se reproduce una cancion.
     private int playCount;
+    // Atributo que almacena el numero de veces que ha sido parada una cancion.
+    private int stopCount;
     
     /**
      * Constructor for objects of class Track.
@@ -26,6 +29,7 @@ public class Track
     {
         setDetails(artist, title, filename);
         playCount = 0;
+        stopCount = 0;
     }
     
     /**
@@ -56,6 +60,8 @@ public class Track
     {
         return title;
     }
+    
+    
     
     /**
      * Return the file name.
@@ -102,5 +108,21 @@ public class Track
     public void playCountUpgrade()
     {
         playCount++;
+    }
+    
+    /**
+     * Método que incrementa el contador del numero de veces que ha sido parada una cancion
+     */
+    public void stopCountUpgrade()
+    {
+        stopCount++;
+    }
+    
+    /**
+     * Método que resetea el valor del contador de paradas de una cancion.
+     */
+    public void ResetStopCount()
+    {
+        stopCount = 0;
     }
 }
