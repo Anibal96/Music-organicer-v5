@@ -227,4 +227,18 @@ public class MusicOrganizer
             System.out.println(track.getDetails());
         }
     }
+    
+    /**
+     * Método que elimina los tracks que tienen un determinado autor (dado por el usuario)
+     */
+    public void removeByArtist (String artista)
+    {
+        Iterator <Track> it = tracks.iterator();
+        while (it.hasNext()){
+            Track track = it.next();
+            if (track.getArtist().contains(artista)){
+                it.remove();
+            }
+        }
+    }
 }
